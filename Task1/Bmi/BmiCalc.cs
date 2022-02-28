@@ -21,11 +21,11 @@ namespace Program
         {
             if (weight > 400 || weight < 10)
             {
-                Console.WriteLine("Вес должен находиться в диапозоне от 5 до 400 кг");
+                throw new ArgumentOutOfRangeException("Вес должен находиться в диапозоне от 5 до 400 кг");
             }
             if (height < 50 || height > 300)
             {
-                Console.WriteLine("Рост должен быть в диапозоне от 50 до 300 см");
+                throw new ArgumentOutOfRangeException("Рост должен быть в диапозоне от 50 до 300 см");
             }
             double bmi;
             bmi = (weight * 10000 / Math.Pow(height, 2));

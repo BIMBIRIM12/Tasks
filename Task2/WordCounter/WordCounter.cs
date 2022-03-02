@@ -6,33 +6,43 @@ using System.Threading.Tasks;
 
 namespace Program
 {
+
+    /// <summary>
+    /// Подсчитывает частоту встречаемости каждого слова в строке
+    /// </summary>
     public class WordCounter
     {
-        /*public string CheckString(string stringFromUser)
+
+        /// <summary>
+        /// Проверяет введённую пользователем строку и делит её на подстроки по слову 
+        /// </summary>
+        /// <param name="stringFromUser">Стрка введённая пользователем</param>
+        /// <returns>Массив слов</returns>
+        /// <exception cref="NullReferenceException">Если пользователь не ввёл строку</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Если пользователь вводит русские буквы</exception>
+        public string[] SetWords(string stringFromUser)
         {
-            if (stringFromUser == null)
+            if (String.IsNullOrEmpty(stringFromUser))
             {
-                throw new ArgumentException("String is empty"); 
+                throw new NullReferenceException("String is empty");
             }
-            for (var i = 0; i < stringFromUser.Length; i++)
+            for(var i = 0; i<stringFromUser.Length;i++)
             {
-                if (char.IsLetter(stringFromUser[i]))
+                if (stringFromUser[i] <= 'я' && stringFromUser[i] >= 'а')
                 {
-                    if (stringFromUser[i] < 'z' && stringFromUser[i] > 'a' || stringFromUser[i] < 'Z' && stringFromUser[i] > 'A')
-                    {
-                        throw new ArgumentOutOfRangeException("Uncorrect value");
-                    }
+                    throw new ArgumentOutOfRangeException("Uncorrect value");
                 }
-            }
-            return stringFromUser; 
-        } */
-     
-        public string[] SetWords (string stringFromUser)
-        {
+            } 
             string[] setWords = stringFromUser.Split(' ', ',' , '.');
             return setWords;
         }
-        public object [,] CounterWords (string[] setWords)
+
+        /// <summary>
+        /// Сравнивает элементы массива на встречаемость и заполняет массив, содержаший слово и частоту его встречаемости
+        /// </summary>
+        /// <param name="setWords">Массив слов</param>
+        /// <returns>Массив частоты слов</returns>
+        public object [,] CountWords (string[] setWords)
         {
             var quantity = new List<int>();
             var word = new List<string>();
@@ -43,9 +53,9 @@ namespace Program
                 for (var j = 0; j < setWords.Length; j++)
                 {
                    if( word[i].ToLower() == setWords[j].ToLower())
-                    {
+                   {
                         quantity[i]++;
-                    }
+                   }
                 }
             }
             var wordQuantity = new object[setWords.Length, 2];
@@ -53,16 +63,9 @@ namespace Program
             {
                 wordQuantity[i, 0] = word[i];
                 wordQuantity[i, 1] = quantity[i];
-
+                Console.WriteLine($"{ (wordQuantity[i, 0])} : {(wordQuantity[i, 1])}");
             }           
-            return wordQuantity;
-                 
-
-                  
-                 
-             
-            
-
+            return wordQuantity;                                                                            
         }
     }
 }

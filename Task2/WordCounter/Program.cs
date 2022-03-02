@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Program
-{
+{   
     class Program
     {
         static void Main()
@@ -18,17 +18,18 @@ namespace Program
             var stringFromUser = GetStringFromUser("Please enter English string");
             var wordCounter = new WordCounter();                     
             var setWords = wordCounter.SetWords( stringFromUser);
-           // var stringChecking = wordCounter.CheckString(stringFromUser);
-            var wordQuantity = wordCounter.CounterWords(setWords);
-            
-            
-           
+            var wordQuantity = wordCounter.CountWords(setWords);                                  
         }
 
+        /// <summary>
+        /// Запрашивает у пользователя строку, принимает её и переводит в нижний регистр
+        /// </summary>
+        /// <param name="message">Сообщение для пользователя</param>
+        /// <returns>Строку от пользователя в нижнем регистре</returns>
         private static string GetStringFromUser(string message)
         {
             Console.WriteLine(message);
-            return Console.ReadLine();
+            return Console.ReadLine().ToLower();
         }
     }
 }

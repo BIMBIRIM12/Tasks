@@ -15,12 +15,13 @@ namespace Program
     {
         public string CheckString(string stringFromUser)
         {
-            if (stringFromUser == "")
+            if (stringFromUser == null)
             {
                 throw new ArgumentException("Введена пустая строка");
             }
             return stringFromUser;
         }
+
         /// <summary>
         /// создаётся массив символов, который включает в себя все пробелы и знаки препинания между словами
         /// </summary>

@@ -17,7 +17,7 @@ namespace Program
         {
             if (stringFromUser == null)
             {
-                throw new ArgumentException("Введена пустая строка");
+                throw new NullReferenceException("Введена пустая строка");
             }
             return stringFromUser;
         }

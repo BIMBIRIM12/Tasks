@@ -16,16 +16,13 @@ namespace Program
         public static void StringOperations()
         {
             var stringFromUser = GetStringFromUser("Please enter English string");
-            var wordCounter = new WordCounter();
-           // var checkingString = wordCounter.CheckString(stringFromUser);
-            var setPunctuations = wordCounter.SetPunctuations(stringFromUser);
-            var setWords = wordCounter.SetWords(setPunctuations, stringFromUser);
+            var wordCounter = new WordCounter();                     
+            var setWords = wordCounter.SetWords( stringFromUser);
+           // var stringChecking = wordCounter.CheckString(stringFromUser);
             var wordQuantity = wordCounter.CounterWords(setWords);
-            for (int i = 0; i < wordQuantity.GetLength(0); i++)
-            {
-                Console.WriteLine($"{wordQuantity[i, 0]}: {wordQuantity[i, 1]}");
-            }
-            Console.ReadLine();
+            
+            
+           
         }
 
         private static string GetStringFromUser(string message)

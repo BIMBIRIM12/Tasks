@@ -27,6 +27,7 @@ namespace Program
             }
             return nums;
         }
+
         /// <summary>
         /// Высчитывает и возвращает максимальное значение массива
         /// </summary>
@@ -44,6 +45,7 @@ namespace Program
             }
             return max;
         }
+
         /// <summary>
         /// Высчитывает минимальное значение массива 
         /// </summary>
@@ -61,6 +63,7 @@ namespace Program
             }
             return min;
         }
+
         /// <summary>
         /// Сортирует неотсортированный массив значений по возрастанию, выводит его в консоль и возвращает
         /// </summary>

@@ -20,51 +20,45 @@ namespace Program
         /// <returns>Массив слов</returns>
         /// <exception cref="NullReferenceException">Если пользователь не ввёл строку</exception>
         /// <exception cref="ArgumentOutOfRangeException">Если пользователь вводит русские буквы</exception>
-        public string[] SetWords(string stringFromUser)
+        public string[] GetWords(string stringFromUser)
         {
             if (String.IsNullOrEmpty(stringFromUser))
             {
                 throw new NullReferenceException("String is empty");
             }
+
             for(var i = 0; i<stringFromUser.Length;i++)
             {
                 if (stringFromUser[i] <= 'я' && stringFromUser[i] >= 'а')
                 {
-                    throw new ArgumentOutOfRangeException("Uncorrect value");
+                    throw new ArgumentOutOfRangeException("Incorrect value");
                 }
             } 
-            string[] setWords = stringFromUser.Split(' ', ',' , '.');
-            return setWords;
+
+            return stringFromUser.Split(' ', ',', '.');
         }
 
         /// <summary>
         /// Сравнивает элементы массива на встречаемость и заполняет массив, содержаший слово и частоту его встречаемости
         /// </summary>
-        /// <param name="setWords">Массив слов</param>
+        /// <param name="getWords">Массив слов</param>
         /// <returns>Массив частоты слов</returns>
-        public object [,] CountWords (string[] setWords)
+        public Dictionary< string, int> GetWordsQuantity (string[] getWords)
         {
-            var quantity = new List<int>();
-            var word = new List<string>();
-            for (var i = 0; i < setWords.Length; i++)
+            var wordQuantity = new Dictionary<string,int>();
+
+            for(var i = 0; i < getWords.Length; i++)
             {
-                word.Add(setWords[i]);
-                quantity.Add(0);
-                for (var j = 0; j < setWords.Length; j++)
+                if (wordQuantity.ContainsKey(getWords[i]))
                 {
-                   if( word[i].ToLower() == setWords[j].ToLower())
-                   {
-                        quantity[i]++;
-                   }
+                    wordQuantity[getWords[i]]++;
+                }
+                else
+                {
+                    wordQuantity.Add(getWords[i], 1);
                 }
             }
-            var wordQuantity = new object[setWords.Length, 2];
-            for (var i = 0; i < setWords.Length; i++)
-            {
-                wordQuantity[i, 0] = word[i];
-                wordQuantity[i, 1] = quantity[i];
-                Console.WriteLine($"{ (wordQuantity[i, 0])} : {(wordQuantity[i, 1])}");
-            }           
+
             return wordQuantity;                                                                            
         }
     }

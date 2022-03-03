@@ -17,8 +17,8 @@ namespace Program
         {
             var stringFromUser = GetStringFromUser("Please enter English string");
             var wordCounter = new WordCounter();                     
-            var setWords = wordCounter.SetWords( stringFromUser);
-            var wordQuantity = wordCounter.CountWords(setWords);                                  
+            var arrayWords = wordCounter.GetWords(stringFromUser);
+            var wordQuantity = wordCounter.GetWordsQuantity(arrayWords);                                  
         }
 
         /// <summary>

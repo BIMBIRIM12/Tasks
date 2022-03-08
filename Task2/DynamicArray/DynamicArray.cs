@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,28 +9,41 @@ namespace DynamicArray
 {
     public class DynamicArray<T>
     {
-        public T[] array { get; set; }
+        public T[] myArray { get; set; }
 
-        public int Length => array.Length;
+        public int Length => myArray.Length;
 
-        public int Сapacity => array.Count();
-       
+        public int Сapacity => myArray.Count();
 
+        public int index { get; set; }
+
+        public T item { get; set; }
+
+        public T[] IEnumerable()
+        {
+            return myArray;
+        }
+
+        public T[] IEnumerable<String>()
+        {
+            return myArray;
+        }
+ 
         public DynamicArray()
         {       
-            array = new T[8];            
+            myArray = new T[8];            
         }
 
         public DynamicArray(int capacity)
         {
-            array = new T[capacity];
+            myArray = new T[capacity];
             return;
         }
 
-        public DynamicArray(IEnumerable<T> myArray)
+        public DynamicArray(IEnumerable<T> yourArray)
         {
-            array = new T[myArray.Count()];
-            myArray.ToList().CopyTo(array, 0);
+            this.myArray = new T[yourArray.Count()];
+            yourArray.ToList().CopyTo(this.myArray, 0);
             return;
         }
        
@@ -41,17 +55,37 @@ namespace DynamicArray
             }
             else
             {
-                if (Сapacity + 1 == Length)
+                if (Сapacity + 1 < Length)
                 {
-                    array = new T[array.Length * 2];
-                    return array;
+                    myArray.Append(item);
+                    return myArray;
                 }
                 else
                 {
-                    array.Append(item);
-                    return array;
+                    myArray = new T[myArray.Length * 2];
+                    return myArray;
                 }
             }
         }
+
+        public T this[int index]
+        {
+            get
+            {
+                return item;
+            }
+            set
+            {
+                if (index > Сapacity)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Incorrect index");
+                }
+                else
+                {
+                     item = myArray[index];
+                }
+            }
+        }
+
     }
 }

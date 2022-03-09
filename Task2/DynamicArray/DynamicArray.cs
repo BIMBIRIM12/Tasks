@@ -15,9 +15,9 @@ namespace DynamicArray
 
         public int Сapacity => myArray.Count();
 
-        public int index { get; set; }
+        public int Index { get; set; }
 
-        public T item { get; set; }
+        public T Item { get; set; }
 
         public T[] IEnumerable()
         {
@@ -34,9 +34,9 @@ namespace DynamicArray
             myArray = new T[8];            
         }
 
-        public DynamicArray(int capacity)
+        public DynamicArray(int size)
         {
-            myArray = new T[capacity];
+            myArray = new T[size];
             return;
         }
 
@@ -47,17 +47,17 @@ namespace DynamicArray
             return;
         }
        
-        public T[] Add(T item)
+        public T[] Add(T Item)
         {
-            if (item == null)
+            if (Item == null)
             {
-                throw new ArgumentNullException(nameof(item), "item is null");
+                throw new ArgumentNullException(nameof(Item), "item is null");
             }
             else
             {
                 if (Сapacity + 1 < Length)
                 {
-                    myArray.Append(item);
+                    myArray.Append(Item);
                     return myArray;
                 }
                 else
@@ -68,24 +68,23 @@ namespace DynamicArray
             }
         }
 
-        public T this[int index]
+        public T this[int Index]
         {
             get
             {
-                return item;
+                return Item;
             }
             set
             {
-                if (index > Сapacity)
+                if (Index > Сapacity)
                 {
                     throw new ArgumentOutOfRangeException(nameof(index), "Incorrect index");
                 }
                 else
                 {
-                     item = myArray[index];
+                     item = myArray[Index];
                 }
             }
         }
-
     }
 }

@@ -22,11 +22,10 @@ namespace Program
         /// <returns> Отсортированный массив </returns>
         public int[] GetSortArray()
         {
-            int[] arrayUnsort = new int[5] { 1, 43, 5, 90, 2 };
+            var arrayUnsort = new int[5] { 1, 43, 5, 90, 2 };
             GetFinishSortingArray sortArray = new(SortArray);
-            int[] value = sortArray(arrayUnsort);
+            return sortArray(arrayUnsort);
 
-            return value;
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace Program
             {
                 throw new ArgumentNullException(nameof(arrayUnsort), "Array is null");
             }
-            else
             {
                 #region Sorting
                 int[] arraySort = arrayUnsort;
@@ -62,10 +60,6 @@ namespace Program
                 }
                 #endregion
                 
-                foreach (var number in arraySort)
-                {
-                    Console.WriteLine(number);
-                }
                 CompletedSorting?.Invoke("Sorting completed");
                 return arraySort;
             }

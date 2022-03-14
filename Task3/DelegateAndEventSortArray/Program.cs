@@ -14,7 +14,7 @@ namespace Program
             var sortingArray = new DelegateSortArray();
             void DisplayMessage(string message) => Console.WriteLine(message);
             sortingArray.CompletedSorting += DisplayMessage;
-            int[] sortArray = sortingArray.GetSortArray();          
+            var sortArray = sortingArray.GetSortArray();          
         }
     }
 }

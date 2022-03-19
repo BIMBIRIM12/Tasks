@@ -6,18 +6,17 @@ namespace DynamicArray
 	{
 		static void Main()
 		{
-			WorkWithDynamicArray();
+			WorkDynamicArray();
 		}	
 		
-		private static void WorkWithDynamicArray()
-        {
-			var yourList = new List<int> { 365, 366, 367 };
-			var myArray = new DynamicArray<int>();
-			var addItem = myArray.Add(12);
-			var addRangeYourList = myArray.AddRange(yourList);
-			var removeIndex = myArray.Remove(5);
-			var insertItem = myArray.Insert(12, 6);
-
+		private static void WorkDynamicArray()
+		{ 
+			var numbers = new List<int> { 365, 366, 367 };			
+			var array = new DynamicArray<int>(numbers);
+			array.Add(12);
+			array.AddRange(numbers);
+			var removeItem = array.Remove(1);
+			var insertItem = array.Insert(12, 2);
         }
 	}
 }

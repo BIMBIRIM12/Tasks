@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
 namespace DynamicArray
 {
 
@@ -10,46 +11,70 @@ namespace DynamicArray
     /// <typeparam name="T">Тип значений массива</typeparam>
     public class DynamicArray<T>
     {
-        private T[] myArray { get; set; }
         #region Parameters
+        private T[] array;
+     
         /// <summary>
         /// Длина массива
         /// </summary>
-        private int Length => myArray.Length;
+        private int Length => array.Length;
 
         /// <summary>
         /// Емкость массива - внутренняя длина массива.
         /// </summary>
-        private int Capacity => myArray.Count();
+        private int Capacity { get; set; }
+        
 
-        /// <summary>
-        /// Длина массива.
-        /// </summary>
-        public const int Size = 19;
+        #region Constants
+        // Задаёт размер массива
+        private const int DefaultSize = 8;
         #endregion
+        /// <summary>
+        /// Получить внутреннюю длину массива.
+        /// </summary>
+        /// <param name="array"> Массив </param>
+        /// <returns></returns>
+        public int GetCapacity(T[] array)
+        {
+            for(var i = 0; i < array.Length; i++)
+            {
+                if(array[i] != null)
+                {
+                    Capacity++;
+                }
+            }
+
+            return Capacity;
+        }
+        #endregion
+        #region CreateArray
         /// <summary>
         /// Создаёт массив с длиной 8.
         /// </summary>
+        /// 
         public DynamicArray()
-        {       
-            myArray = new T[8];            
+        {
+            if (DefaultSize <= 0)
+            {
+                throw new ArgumentNullException(nameof(DefaultSize), "Size is null or lass than zero ");
+            }
+
+            array = new T[DefaultSize];            
         }
 
         /// <summary>
         /// Создаёт массив фиксированной длины.
         /// </summary>
-        /// <param name="Size"> Длина массива </param>
+        /// <param name="size"> Длина массива </param>
         /// <exception cref="ArgumentNullException"> Проверка длины на нулевое/отрицательное значение </exception>
-        public DynamicArray(int Size)
+        public DynamicArray(int size)
         {
-            if(Size <= 0)
+            if(size <= 0)
             {
-                throw new ArgumentNullException(nameof(Size), "Size is null or lass than zero ");
+                throw new ArgumentNullException(nameof(size), "Size is null or lass than zero ");
             }
-            else
-            {
-                myArray = new T[Size];
-            } 
+
+            array = new T[size];                        
         }
 
         /// <summary>
@@ -57,151 +82,148 @@ namespace DynamicArray
         /// </summary>
         /// <param name="yourList"> Список, реализующий интерфейс IEnumerable </param>
         /// <exception cref="ArgumentNullException"> Проверка коллекции на наличие значений </exception>
-        public DynamicArray(IEnumerable<T> yourList)
+        public DynamicArray(IEnumerable<T> numbers)
         {
-            if (yourList == null)
+            if (numbers == null)
             {
-                throw new ArgumentNullException(nameof(yourList), "yourList is null");
+                throw new ArgumentNullException(nameof(numbers), "yourList is null");
             }
-            else
+
+            array = numbers.ToArray();  
+            foreach(var number in array)
             {
-                var array = yourList.ToArray();
-            } 
+                Console.WriteLine(number);
+            }
         }
-        #region ChangesArray      
+        #endregion
+        #region ChangeArray      
         /// <summary>
         /// Добавляет в конец массива элемент.
         /// </summary>
         /// <param name="item"> Элемент, который необходимо добавить </param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"> Проверка элемента на нулевое значение </exception>
-        public T[] Add(T item)
+        public void Add(T item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item), "item is null");
             }
-            else
-            {
-                if (Capacity + 1 < Length)
-                {
-                    myArray.Append(item);
-                    return myArray;
-                }
-                else
-                {
-                    myArray = new T[myArray.Length * 2];
-                    myArray.Append(item);
-                    return myArray;
-                    
-                }
-            }
+
+            AddRange(new List <T> { item });          
         }
 
         /// <summary>
         /// Добавляет в массив коллекцию.
         /// </summary>
-        /// <param name="yourList"> Коллекция, реализующая интерфейс IEnumerable </param>
+        /// <param name="list"> Коллекция, реализующая интерфейс IEnumerable </param>
         /// <returns> Заполненный массив </returns>
         /// <exception cref="ArgumentNullException"> Проверка коллекции на наличие значений </exception>
-        public T[] AddRange(IEnumerable<T> yourList)
+        public void AddRange(IEnumerable<T> list)
         {
-            if(yourList == null)
+            if (Capacity + list.Count() <= Length)
             {
-                throw new ArgumentNullException(nameof(yourList), "yourList is null");
+                 for (var i = Capacity; i < list.Count(); i++)
+                 {
+                      array[i] = list.ElementAt(i - Capacity);
+                 }
             }
             else
             {
-                if (Capacity + yourList.Count() < Length)
-                {
-                    for (var i = Capacity; i < yourList.Count(); i++)
-                    {
-                        myArray[i] = yourList.ElementAt(i - Capacity);
-                    }
-
-                    return myArray;
-                }
-                else
-                {
-                    myArray = new T[myArray.Length * 2];
-                    for(var i = Capacity; i< yourList.Count(); i++)
-                    {
-                        myArray[i] = yourList.ElementAt(i - Capacity);
-                    }
-
-                    return myArray;
-                }
-            }
+                 array = new T[array.Length * 2];
+                 for(var i = Capacity; i< list.Count(); i++)
+                 {
+                      array[i] = list.ElementAt(i - Capacity);
+                 }
+            }           
+            
         }
 
         /// <summary>
         /// Удаляет элемент из массива по указанному индексу.
         /// </summary>
-        /// <param name="Index"> Индекс элемента </param>
+        /// <param name="index"> Индекс элемента </param>
         /// <returns> Результат удаления </returns>
         /// <exception cref="IndexOutOfRangeException"> Проверка индекса на наличие в массиве </exception>
-        public bool Remove (int Index)
+        public bool Remove (int index)
         {
-            if(Index > Capacity | Index < Capacity)
+            if(index > Length -1 )
             {
-                throw new IndexOutOfRangeException(nameof(Index));
+                throw new IndexOutOfRangeException(nameof(index));
             }
-            else
+
+            for(var i = index; i < Length-1; i++)
             {
-                myArray[Index] = default(T);
-                return true;
+                array[i] = array[i+1]; 
             }
+
+            array[Length - 1] = default(T);          
+            return true;
         }
 
         /// <summary>
         /// Добавления элемента по указанному индексу в массив.
         /// </summary>
         /// <param name="item"> Добавляемый элемент </param>
-        /// <param name="Index"> Индекс элемента </param>
+        /// <param name="index"> Индекс элемента </param>
         /// <returns> Результат добавления </returns>
-        public bool Insert(T item, int Index)
+        public bool Insert(T item, int index)
         {
-            if (Capacity + 1 >= Length)
+            if(item == null )
             {
-                myArray = new T[myArray.Length + 1];
-                for(var i = Capacity - 1; i >=Index ; i--)
+                throw new ArgumentNullException(nameof(item), "Item is null");
+            }
+
+            if (index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (Capacity + 1 > Length)
+            {
+                array = new T[array.Length + 1];
+                for(var i = Capacity - 1; i >=index ; i--)
                 {
-                    myArray[i] = myArray[i + 1];
-                    myArray[Index] = item;
+                    array[i] = array[i + 1];                  
                 }
+
+                array[index] = item;               
                 return true;
             }
             else
             {
-                for (var i = Capacity - 1; i >= Index; i--)
+                for (var i = Capacity - 1; i >= index; i--)
                 {
-                    myArray[i] = myArray[i + 1];
-                    myArray[Index] = item;
+                    array[i] = array[i + 1];                  
                 }
+
+                array[index] = item;               
                 return true;
             }
+          
+
         }
         #endregion
+        #region Indexer
         /// <summary>
         /// Индексатор, позволяющий работать с элементом массива по указанному индексу.
         /// </summary>
-        /// <param name="Index"> Индекс элемента </param>
+        /// <param name="index"> Индекс элемента </param>
         /// <returns> Элемент </returns>
         /// <exception cref="IndexOutOfRangeException"> Проверка на наличие элемента с таким индексом в массиве </exception>
-        public T this[int Index]
+        public T this[int index]
         {
             get
             {
-                if (Index >= Length)
+                if (index >= Length)
                 {
-                    throw new IndexOutOfRangeException(nameof(Index));
+                    throw new IndexOutOfRangeException(nameof(index));
                 }
-                else
-                {
-                    var element = myArray[Index];
-                    return element;
-                }
+                Console.WriteLine(array[index]);
+                return array[index];
+                                                            
             }
         }
-    }  
+        #endregion
+    }
 }

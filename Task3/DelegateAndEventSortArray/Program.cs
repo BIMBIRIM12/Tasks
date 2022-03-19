@@ -4,17 +4,20 @@ namespace Program
 {
     class DelegateAndEvents
     {
+        #region Methods
         static void Main()
         {
-            MoveDelegateAndEvent();
+            DemoDelegateAndEventSortArray();
         }
 
-        private static void MoveDelegateAndEvent()
+        private static void DemoDelegateAndEventSortArray()
         {
-            var sortingArray = new DelegateSortArray();
+            var delegateSortArray = new DelegateSortArray();
             void DisplayMessage(string message) => Console.WriteLine(message);
-            sortingArray.CompletedSorting += DisplayMessage;
-            var sortArray = sortingArray.GetSortArray();          
+            delegateSortArray.CompletedSorting += DisplayMessage;
+            var getSortArray = delegateSortArray.SetUnsortArrayAndGetSortArray();
+            delegateSortArray.CompletedSorting -= DisplayMessage;
         }
+        #endregion
     }
 }

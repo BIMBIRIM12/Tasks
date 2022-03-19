@@ -3,7 +3,8 @@
 namespace Program
 {
     public class DelegateAndEvents
-    { 
+    {
+        #region Methods
         static void Main()
         {
             DemoExample();
@@ -16,6 +17,7 @@ namespace Program
             void DisplayMessage(string message) => Console.WriteLine(message);
             example.ComparedCompleted += DisplayMessage;
             example.CompareNumbers(numberFromUser);
+            example.ComparedCompleted -= DisplayMessage;
         }
         #region GetNumberFromUser
         public static int ToInt(string stringFromUser)
@@ -23,11 +25,9 @@ namespace Program
             if (String.IsNullOrEmpty(stringFromUser))
             {
                 throw new ArgumentNullException(nameof(stringFromUser), "String is empty");
-            }
-            else
-            {
-                return int.Parse(stringFromUser);
-            }     
+            } 
+            
+            return int.Parse(stringFromUser);                 
         }
 
         private static string GetStringFromUser()
@@ -35,6 +35,7 @@ namespace Program
             Console.WriteLine("Enter number");
             return Console.ReadLine();
         }
+        #endregion
         #endregion
     }
 }

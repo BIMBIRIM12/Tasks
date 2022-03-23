@@ -59,7 +59,7 @@ namespace Program
         /// <param name="age"> Возраст </param>
         public Person (string name, string surname, int age, string gender)
         {
-            CheckingParameters(name, surname, age);
+            CheckingParameters(name, surname, age, gender);
             Name = name;
             Surname = surname;
             Age = age;
@@ -74,7 +74,7 @@ namespace Program
         /// <param name="age"> Возраст </param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void CheckingParameters(string name, string surname, int age)
+        public static void CheckingParameters(string name, string surname, int age, string gender)
         {
             if(name == null)
             {
@@ -89,6 +89,11 @@ namespace Program
             if(age <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(age), "Age equals null or less than null");
+            }
+
+            if(gender == null)
+            {
+                throw new ArgumentNullException(nameof(gender), "Gender is empty");
             }
         }
     }

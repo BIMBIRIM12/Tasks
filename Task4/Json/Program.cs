@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text.Json;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.IO;
+using System.Configuration;
 
 namespace Program
 {
@@ -10,6 +9,8 @@ namespace Program
     {     
         static void Main(string[] args)
         {
+            var currentConfig = ConfigurationManager.AppSettings.Get("pathJsonDate");
+   
             Person anton = new Person("Anton", "Nozdrin", 26);  
             var jsonFormatter = new DataContractJsonSerializer(typeof(Person));
 

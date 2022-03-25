@@ -41,10 +41,10 @@ namespace Program
         public Person(string name, string surname, int age, string gender)
         {
             CheckParameters(name, surname, age, gender);
-            Name = name;
-            Surname = surname;
-            Age = age;
-            Gender = gender;
+            this.Name = name;
+            this.Surname = surname;
+            this.Age = age;
+            this.Gender = gender;
         }
 
         /// <summary>

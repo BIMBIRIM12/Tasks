@@ -46,7 +46,7 @@ namespace Program
             for(var i = 0; i < properties.Length; i++)
             {
                 Console.WriteLine(properties[i].GetValue(newPerson));
-            }   
+            }
         }
     } 
 }
